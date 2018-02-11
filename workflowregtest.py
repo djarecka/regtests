@@ -67,8 +67,7 @@ class WorkflowRegtest(object):
             #self.report_txt.write("\n * Environment:\n{}\n".format(software_vers))
             if self.docker_status[ii] == "docker ok":
                 image = "repronim/regtests:{}".format(sha_list[ii])
-                dockerfile = os.path.join(self.workflow_path, 'Dockerfile.{}'.format(sha_list[ii]))
-                self._run_cwl(dockerfile, software_vers_str)
+                self._run_cwl(image, software_vers_str)
 
 
     def _generate_docker_image(self):
@@ -85,16 +84,16 @@ class WorkflowRegtest(object):
                 self.docker_status.append("no docker")
 
 
-    def _run_cwl(self, dockerfile, soft_ver_str):
+    def _run_cwl(self, image, soft_ver_str):
         """Running workflow with CWL"""
         self._creating_main_cwl()
         self._creating_main_input(soft_ver_str)
-        self._creating_workflow_cwl(dockerfile)
+        self._creating_workflow_cwl(image)
         self._creating_test_cwl()
         subprocess.call(["cwl-runner", "--no-match-user", "cwl.cwl", "input.yml"])
 
 
-    def _creating_workflow_cwl(self, dockerfile):
+    def _creating_workflow_cwl(self, image):
         """Creating cwl file"""
         cmd_cwl = (
             "#!/usr/bin/env cwl-runner\n"
@@ -103,13 +102,13 @@ class WorkflowRegtest(object):
             "baseCommand: {}\n"
             "hints:\n"
             "  DockerRequirement:\n"
-            "    dockerFile: {}\n\n"
+            "    dockerPull: {}\n\n"
             "inputs:\n"
             "  script:\n"
             "    type: File\n"
             "    inputBinding:\n"
             "      position: 1\n"
-        ).format(self.command, dockerfile)
+        ).format(self.command, image)
 
         for (ii, input_tuple) in enumerate(self.inputs):
             cmd_cwl += (

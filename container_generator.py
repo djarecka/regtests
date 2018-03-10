@@ -186,19 +186,3 @@ def docker_main(workflow_path, neurodocker_dict, sha1):
     filepath = os.path.join(workflow_path, 'Dockerfile.{}'.format(sha1))
     tag = "repronim/regtests:{}".format(sha1)
     build_image(filepath, build_context=workflow_path, tag=tag)
-
-
-if __name__ == '__main__':
-    from argparse import ArgumentParser, RawTextHelpFormatter
-    parser = ArgumentParser(description=__doc__,
-                            formatter_class=RawTextHelpFormatter)
-    parser.add_argument("-w", dest="workflow_path",
-                        help="workflow_path")
-    parser.add_argument("-n", dest="neurodocker_dict",
-                        help="neurodocker_dict")
-    parser.add_argument("-s", dest="sha1",
-                        help="sha1")
-
-    args = parser.parse_args()
-
-    sorting(args.filename, args.neurodocker_dict, args.sha1)

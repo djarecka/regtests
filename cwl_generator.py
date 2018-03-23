@@ -9,16 +9,16 @@ class CwlGenerator(object):
         self.script = os.path.join(self.workflow_path, "workflow",
                                    parameters["script"])
         self.command = parameters["command"]
-        self.tests = parameters["tests"]
+        self.tests_regr = parameters["tests_regr"]
         self.inputs = parameters["inputs"]
 
-        test_name_l = [i[1] for i in self.tests]
-        self.test_name_str = ('[' + len(test_name_l) * '"{}",' + ']').format(*test_name_l)
-        test_file_l = [i[0] for i in self.tests]
-        self.test_file_str = ('[' + len(test_file_l) * '"{}",' + ']').format(*test_file_l)
-        self.report_str = ('[' + len(test_name_l) * '"report_{}_{}_{}.txt",'.format(
+        regr_name_l = [i[1] for i in self.tests_regr]
+        self.regr_name_str = ('[' + len(regr_name_l) * '"{}",' + ']').format(*regr_name_l)
+        regr_file_l = [i[0] for i in self.tests_regr]
+        self.regr_file_str = ('[' + len(regr_file_l) * '"{}",' + ']').format(*regr_file_l)
+        self.report_str = ('[' + len(regr_name_l) * '"report_{}_{}_{}.txt",'.format(
             {}, os.path.basename(self.workflow_path), self.soft_ver_str) + ']').format(
-                    *range(len(self.tests)))
+                    *range(len(self.tests_regr)))
 
 
 
@@ -63,7 +63,7 @@ class CwlGenerator(object):
                 "      items: File\n"
                 "    outputBinding:\n"
                 '      glob: {}\n'
-        ).format(self.test_file_str)
+        ).format(self.regr_file_str)
 
         with open("cwl_workflow.cwl", "w") as cwl_file:
             cwl_file.write(cmd_cwl)
@@ -215,8 +215,8 @@ class CwlGenerator(object):
                  os.path.join(os.path.dirname(os.path.realpath(__file__)), "test_main.py"),
                  os.path.join(os.path.dirname(os.path.realpath(__file__)), "testing_functions"),
                  os.path.join(self.workflow_path, "data_ref"),
-                 self.test_file_str,
-                 self.test_name_str,
+                 self.regr_file_str,
+                 self.regr_name_str,
                  self.report_str)
         for (ii, input_tuple) in enumerate(self.inputs):
             if input_tuple[0] == "File":

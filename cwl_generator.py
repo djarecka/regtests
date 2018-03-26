@@ -10,6 +10,7 @@ class CwlGenerator(object):
                                    parameters["script"])
         self.command = parameters["command"]
         self.tests_regr = parameters["tests_regr"]
+        self.tests_stat = parameters["tests_stat"]
         self.inputs = parameters["inputs"]
 
         regr_name_l = [i[1] for i in self.tests_regr]
@@ -26,7 +27,7 @@ class CwlGenerator(object):
         self._creating_main_cwl()
         self._creating_main_input() # should be in __init__?
         self._creating_workflow_cwl()
-        self._creating_test_cwl()
+        self._creating_regr_cwl()
 
 
     def _creating_workflow_cwl(self):
@@ -70,7 +71,7 @@ class CwlGenerator(object):
 
 
 
-    def _creating_test_cwl(self):
+    def _creating_regr_cwl(self):
         cmd_cwl = (
             "# !/usr/bin/env cwl-runner\n"
             "cwlVersion: v1.0\n"
@@ -118,7 +119,7 @@ class CwlGenerator(object):
             "      glob: $(inputs.input_files_report)\n"
         )
 
-        with open("cwl_test.cwl", "w") as cwl_file:
+        with open("cwl_regr.cwl", "w") as cwl_file:
             cwl_file.write(cmd_cwl)
 
 
@@ -158,7 +159,7 @@ class CwlGenerator(object):
             "    type:\n"    
             "      type: array\n"
             "      items: File\n"
-            "    outputSource: test/output_files_report\n\n"
+            "    outputSource: test_regr/output_files_report\n\n"
             "steps:\n"
             "  workflow:\n"
             "    run: cwl_workflow.cwl\n"
@@ -172,8 +173,8 @@ class CwlGenerator(object):
 
         cmd_cwl += (
             "    out: [output_files]\n" #only one output per test
-            "  test:\n"
-            "    run: cwl_test.cwl\n"
+            "  test_regr:\n"
+            "    run: cwl_regr.cwl\n"
             "    scatter: [input_files_out, test_name, ref_name, input_files_report]\n"
             "    scatterMethod: dotproduct\n"
             "    in:\n"

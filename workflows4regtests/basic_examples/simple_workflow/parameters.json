@@ -2,16 +2,14 @@
     "command": "python",
     "env": {
         "base": [
-            "debian:stretch",
-            "ubuntu:16.04"
+            "debian:stretch"
         ],
         "conda_env_yml": [
             "environment_py2.yml",
             "environment_py3.yml"
         ],
         "fsl": [
-            "5.0.9",
-            "5.0.10"
+            "5.0.9"
         ]
     },
     "inputs": [

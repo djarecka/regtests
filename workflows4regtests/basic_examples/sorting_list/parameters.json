@@ -20,6 +20,7 @@
     "script": "sorting.py",
     "tests": [
         {"file": "list_sorted.json", "script": "test_obj_eq.py", "name": "regr1"},
+        {"file": "extra/list_sorted_ex.json", "script": "test_obj_eq.py", "name": "regr1a"},
         {"file": "sum_list.json", "script": "test_obj_eq.py", "name": "regr2"},
         {"file": "list_sorted.json", "script": "stat_list.py", "name": "stat"}
     ]

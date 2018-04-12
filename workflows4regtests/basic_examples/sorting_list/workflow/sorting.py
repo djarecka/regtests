@@ -1,4 +1,4 @@
-import json
+import json, os
 
 def sorting(filename):
     """ a simple function for sorting list"""
@@ -11,7 +11,12 @@ def sorting(filename):
         json.dump(list2sort, outfile)
     with open('sum_list.json', 'w') as outfile:
         json.dump(sum(list2sort), outfile)
-        
+
+    os.mkdir("extra")
+    with open('extra/list_sorted_ex.json', 'w') as outfile:
+        json.dump(list2sort, outfile)
+
+
     print("sorted list: {}".format(list2sort))
 
 

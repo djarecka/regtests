@@ -181,6 +181,7 @@ class WorkflowRegtest(object):
         fig = go.Figure(data=data, layout = layout)
         plot(fig, filename=os.path.join(self.working_dir,'parcoords_{}_All'.format(os.path.basename(self.workflow_path))))
 
+
     def dashboard_workflow(self):
         js_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "examples")
         for js_template in ["dashboard.js", "index.html", "style.css"]:

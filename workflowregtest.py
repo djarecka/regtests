@@ -16,7 +16,7 @@ import pandas as pd
 
 import container_generator as cg
 import cwl_generator as cwlg
-from altair_plots import AltairPlots
+from dashboard_plots import DashboardPlots
 
 
 class WorkflowRegtest(object):
@@ -207,8 +207,9 @@ class WorkflowRegtest(object):
 
     def dashboard_workflow(self):
         js_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "examples")
-        for js_template in ["dashboard.js", "index.html", "style.css"]:
+        for js_template in ["parallel_plot.js", "index.html", "style.css"]:
             shutil.copy2(os.path.join(js_dir, js_template), self.working_dir)
 
-        ap = AltairPlots(self.working_dir, self.res_all_df, self.res_all_flat_df, self.plot_parameters)
+        ap = DashboardPlots(self.working_dir, self.res_all_df, self.res_all_flat_df,
+                            self.plot_parameters, env_keys = list(self.env_parameters.keys()))
         ap.create_plots()

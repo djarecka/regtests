@@ -3,7 +3,7 @@ var dataset;
 var dataView;
 
 
-d3.csv("output_all.csv", function(data) {
+d3.csv("output_parallel.csv", function(data) {
 
     "use strict";
 

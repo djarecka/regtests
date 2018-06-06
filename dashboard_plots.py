@@ -4,11 +4,12 @@ import os, pdb
 import pandas as pd
 
 
-class AltairPlots(object):
-    def __init__(self, wf_dir, results_df, results_df_flat, plot_spec):
+class DashboardPlots(object):
+    def __init__(self, wf_dir, results_df, results_df_flat, plot_spec, env_keys):
         self.wf_dir = wf_dir
         self.index = os.path.join(self.wf_dir, "index.html")
         self.plot_spec = plot_spec
+        self.env_keys = env_keys
         self._soup = self._index_read()
         self.results = results_df
         self.results_flat = results_df_flat
@@ -19,14 +20,23 @@ class AltairPlots(object):
         self.drop_key_list_default = ["python", "base", "fsl", "conda_install", "pip_install"]
 
     def create_plots(self):
+        parallel = False
         for ii, spec in enumerate(self.plot_spec):
-            if spec["function"] not in self.plot_description.keys():
+            # if parallel_plot in spec we can choose variables to plot
+            if spec["function"] == "parallel_plot":
+                parallel = True
+                self._parallel_var_choice(spec["var_list"])
+            elif spec["function"] not in self.plot_description.keys():
                 raise Exception("{} is not available, available plotting functions: {}".format(
                     spec["function"], list(self.plot_description.keys())
                 ))
-            self._index_edit(title=self.plot_description[spec["function"]], id=ii)
-            plot_dict = getattr(self, spec["function"])(spec["var_list"])
-            self._js_create(plot_dict, ii)
+            else:
+                self._index_edit(title=self.plot_description[spec["function"]], id=ii)
+                plot_dict = getattr(self, spec["function"])(spec["var_list"])
+                self._js_create(plot_dict, ii)
+        # if no list chosen default option
+        if not parallel:
+            self._parallel_var_choice()
         self._index_write()
 
 
@@ -91,6 +101,12 @@ class AltairPlots(object):
     def barplot_all_rel_error(self, var_l):
         return self.barplot_all(var_l, y_scale=(0,1), y_max_check=True, default_col="rel_error")
 
+    def _parallel_var_choice(self, var=None):
+        if var:
+            parallel_df = self.results[var+self.env_keys]
+        else:
+            parallel_df = self.results.drop(columns=["env"])
+        parallel_df.to_csv(os.path.join(self.wf_dir, "output_parallel.csv"), index=False)
 
     def _js_create(self, plot_dict, id):
         js_str = 'var var{} = {}\n vegaEmbed("#alt_{}", var{});'.format(

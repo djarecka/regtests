@@ -38,6 +38,10 @@
     ],
     "plots": [
     {
+    "function": "parallel_plot",
+    "var_list": []
+    },
+    {
     "function": "scatter_all",
     "var_list": []
     },

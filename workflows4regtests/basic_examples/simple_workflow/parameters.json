@@ -37,6 +37,10 @@
         }
     ],
     "plots": [
+      {
+       "function": "parallel_plot",
+       "var_list": ["reg:rel_error:white", "reg:rel_error:gray", "reg:rel_error:Right-Hippocampus", "reg:rel_error:Right-Amygdala"]
+       },
        {
        "function": "scatter_all",
        "var_list": []

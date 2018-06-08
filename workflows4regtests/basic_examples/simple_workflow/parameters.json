@@ -12,7 +12,8 @@
             "nipype pandas requests"
         ],
         "fsl": [
-            "5.0.9",
+            "5.0.6",
+            "5.0.7",
             "5.0.10"
         ]
     },
@@ -31,7 +32,7 @@
     "script": "run_demo_workflow.py",
     "tests": [
         {
-        "file": ["output/AnnArbor_sub16960/segstats.json", "output/AnnArbor_sub20317/segstats.json", "output/AnnArbor_sub38614/segstats.json"],
+        "file": ["output/AnnArbor_sub16960/segstats.json", "output/AnnArbor_sub20317/segstats.json"],
         "script": "check_output.py",
         "name": "reg"
         }

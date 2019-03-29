@@ -1,4 +1,4 @@
-# TestKraken   <div style="text-align: right"> <img src="testkraken/dashboard_template/images/TestKraken_final.png" width="250"> <\div>
+# TestKraken   <div style="text-align: right"> <img src="testkraken/dashboard_template/images/TestKraken_final.png" width="250"> </div>
 
 Use _Testkraken_ to test workflows in a matrix of parametrized environments.
 

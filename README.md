@@ -1,4 +1,6 @@
-#TestKraken  <img style="float: right;" src="testkraken/dashboard_template/images/TestKraken_final.png" width="250">
+#TestKraken  
+
+<img style="float: right;" src="testkraken/dashboard_template/images/TestKraken_final.png" width="250">
 
 Use _Testkraken_ to test workflows in a matrix of parametrized environments.
 

@@ -51,6 +51,7 @@ def test_el_list_eq(file_out, file_ref=None, name=None, **kwargs):
     with open(report_filename, "w") as f:
         json.dump(out, f)
 
+    print(report_filename)
 
 if __name__ == '__main__':
     from argparse import ArgumentParser, RawTextHelpFormatter

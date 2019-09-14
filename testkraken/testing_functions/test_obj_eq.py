@@ -29,7 +29,8 @@ def test_obj_eq(file_out, file_ref=None, name=None):#, **kwargs):
             except:
                 obj_ref = f.read().strip()
 
-    report_filename = Path(file_out).absolute().parent / f"report_{name}.json"
+    # report_filename = Path(file_out).absolute().parent / f"report_{name}.json"
+    report_filename = Path("/home/circleci/regtests/outputs/sorting_list/env_0") / f"report_{name}.json"
     out = {}
     try:
         if type in ["json", "txt"]:

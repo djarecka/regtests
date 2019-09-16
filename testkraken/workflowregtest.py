@@ -142,6 +142,7 @@ class WorkflowRegtest:
 
     def _run_pydra(self, image, soft_ver_str):
         wf = pydra.Workflow(name="wf", input_spec=["image"])
+        Path(self.working_dir / soft_ver_str).mkdir(exist_ok=True)
         wf.inputs.image = image
         cmd = [self.parameters["command"], f"/workflow_dir/workflow/{self.parameters['script']}",
                "-o", "/output_dir"]

@@ -114,13 +114,13 @@ class WorkflowRegtest:
         print(f"+ building {len(self.neurodocker_specs)} Docker images")
         self.docker_status = []
         for sha1, neurodocker_dict in self.neurodocker_specs.items():
-            try:
-                print("++ building image: {}".format(neurodocker_dict))
-                cg.docker_main(self.working_dir, neurodocker_dict, sha1, build_context=self.build_context)
-                self.docker_status.append("docker ok")
-            except Exception as e:
-               self.docker_status.append(
-                   "failed to build image with SHA1 {}: {}".format(sha1, e))
+            #try:
+            print("++ building image: {}".format(neurodocker_dict))
+            cg.docker_main(self.working_dir, neurodocker_dict, sha1, build_context=self.build_context)
+            self.docker_status.append("docker ok")
+            # except Exception as e:
+            #    self.docker_status.append(
+            #        "failed to build image with SHA1 {}: {}".format(sha1, e))
 
     def _run_workflow_in_matrix_of_envs(self):
         """Run workflow for all env combination, testing for all tests.
